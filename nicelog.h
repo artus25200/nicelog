@@ -62,7 +62,13 @@ enum LogLevel {
 
 enum { NL_DISABLE = 0, NL_ENABLE };
 
-enum StageInfo { NL_OK, NL_SKIPPED, NL_ABORTED, NL_ENUM_STAGE_INFO_COUNT };
+enum StageInfo {
+  NL_OK,
+  NL_SKIPPED,
+  NL_ABORTED,
+
+  NL_ENUM_STAGE_INFO_COUNT
+};
 
 /*
 ** Function to specify your application name to nicelog.
