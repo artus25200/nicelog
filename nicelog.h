@@ -75,7 +75,7 @@ enum StageInfo {
 ** NiceLog will then print your logs like this:
 **    [APP-NAME][INFO] message
 **
-** @param name    Name to use
+** @param name max 20 characters
 */
 void NL_set_app_name(char *name);
 

@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-static char _app_name[20] = "";
+static char _app_name[21] = "";
 
 static int _log_level = NL_INFO;
 static unsigned int depth = 0;
@@ -28,7 +28,7 @@ static unsigned int show_file_and_line = 1;
 void NL_set_app_name(char *name) {
   int i = 0;
   int length = strlen(name);
-  while (i < 19 && i < length && (_app_name[i] = name[i]) != '\0')
+  while (i < 20 && i < length && (_app_name[i] = name[i]) != '\0')
     ++i;
   _app_name[i] = '\0';
 }
