@@ -99,7 +99,7 @@ void NL_phase_done(unsigned int info) {
 
 void NL_set_file_and_line(int enable) { show_file_and_line = enable; }
 
-void test(void) {
+void NL_test(void) {
   NL_set_log_level(NL_ALL);
   BEGIN("Initializing app");
   INFO("Hello World! 1+2 = %d", 1 + 2);
@@ -117,5 +117,3 @@ void test(void) {
   FATAL("Unknown error, exiting...");
   DONE(NL_ABORTED);
 }
-
-int main(void) { test(); }
