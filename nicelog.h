@@ -47,6 +47,8 @@ enum LogLevel {
   NL_ENUM_LOG_LEVEL_COUNT
 };
 
+enum { NL_DISABLE = 0, NL_ENABLE };
+
 enum StageInfo { NL_OK, NL_SKIPPED, NL_ABORTED, NL_ENUM_STAGE_INFO_COUNT };
 
 void NL_set_app_name(char *name);
@@ -57,6 +59,8 @@ void NL_log_output(unsigned int logLevel, char *file, unsigned int line,
 
 void NL_phase_begin(char *stage);
 void NL_phase_done(unsigned int info);
+
+void NL_set_file_and_line(int enable);
 
 /*    ┌─[Initializing app]
  *    │  [WARN] Hello World! 1+2 = 3
