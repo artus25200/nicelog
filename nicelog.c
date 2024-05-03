@@ -3,9 +3,12 @@
 #include <stdio.h>
 #include <string.h>
 
-static char _app_name[21] = "";
+struct Logger {
+  char name[21];
+  unsigned int log_level;
+  unsigned int show_file_and_line;
+};
 
-static int _log_level = NL_INFO;
 static unsigned int depth = 0;
 
 static const char *log_level_str[] = {"NULL",
@@ -23,27 +26,27 @@ static const char *stage_info[] = {(NL_BOLDGREEN "DONE" NL_RESET),
 
 static unsigned int just_finished_phase = 0;
 
-static unsigned int show_file_and_line = 1;
-
-void NL_set_app_name(char *name) {
+void NL_set_app_name(Logger *logger, char *name) {
   int i = 0;
   int length = strlen(name);
-  while (i < 20 && i < length && (_app_name[i] = name[i]) != '\0')
+  while (i < 20 && i < length && (logger->name[i] = name[i]) != '\0')
     ++i;
-  _app_name[i] = '\0';
+  logger->name[i] = '\0';
 }
 
-void NL_reset_app_name() { _app_name[0] = '\0'; }
+void NL_reset_app_name(Logger *logger) { logger->name[0] = '\0'; }
 
-void NL_set_log_level(unsigned int log_level) { _log_level = log_level; }
+void NL_set_log_level(Logger *logger, unsigned int log_level) {
+  logger->log_level = log_level;
+}
 
-void NL_log_output(unsigned int log_level, char *file, unsigned int line,
-                   const char *fmt, ...) {
+void NL_log_output(Logger logger, unsigned int log_level, char *file,
+                   unsigned int line, const char *fmt, ...) {
   if (log_level < 1 && log_level > NL_ENUM_LOG_LEVEL_COUNT - 1) {
     WARN("NiceLog: Unknown log level: %d", log_level);
     return;
   }
-  if (log_level < _log_level)
+  if (log_level < logger.log_level)
     return; // ignore
   va_list args;
   va_start(args, fmt);
@@ -51,10 +54,10 @@ void NL_log_output(unsigned int log_level, char *file, unsigned int line,
   for (int i = 0; i < depth; ++i)
     printf("│  ");
 
-  if (_app_name[0] != '\0')
-    printf("[%s]", _app_name);
+  if (logger.name[0] != '\0')
+    printf("[%s]", logger.name);
   printf("[%s] ", log_level_str[log_level]);
-  if (show_file_and_line)
+  if (logger.show_file_and_line)
     printf("(%s:%d) ", file, line);
   if (log_level == NL_WARN)
     printf(NL_YELLOW);
@@ -97,7 +100,9 @@ void NL_phase_done(unsigned int info) {
   just_finished_phase = 1;
 }
 
-void NL_set_file_and_line(int enable) { show_file_and_line = enable; }
+void NL_set_file_and_line(Logger *logger, int enable) {
+  logger->show_file_and_line = enable;
+}
 
 void NL_test(void) {
   NL_set_log_level(NL_ALL);

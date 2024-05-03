@@ -71,28 +71,38 @@ enum StageInfo {
 };
 
 /*
-** Function to specify your application name to nicelog.
-** NiceLog will then print your logs like this:
-**    [APP-NAME][INFO] message
-**
-** @param name max 20 characters
+** struct used when logging.
 */
-void NL_set_app_name(char *name);
+typedef struct Logger Logger;
+
+void NL_init_logger(Logger *logger);
 
 /*
-** Function to specify the log level of NiceLog.
+** Function to specify the name of your logger.
+** NiceLog will then print your logs like this:
+**    [LOGGER-NAME][INFO] message
+**
+** @param logger pointer to your Logger object
+** @param name max 20 characters
+*/
+void NL_set_logger_name(Logger *logger, char *name);
+
+/*
+** Function to specify the log level of your logger.
 ** Any output under the log level will be ignored
 ** Example : if you set the log level to NL_INFO, debug and trace output will be
 **           ignored.
 **
+** @param logger pointer to your logger object
 ** @param logLevel Any value of the LogLevel enum
 */
-void NL_set_log_level(unsigned int logLevel);
+void NL_set_log_level(Logger *logger, unsigned int logLevel);
 
 /*
 ** Function to print out a log in stdout. It's better to use the macros defined
 ** at the top of this file.
 **
+** @param logger the logger to use
 ** @param logLevel Any value of the LogLevel enum
 ** @param file The c file in which this function is used (for debugging
 **             purposes). Use the C '__FILE__' macro.
@@ -101,8 +111,8 @@ void NL_set_log_level(unsigned int logLevel);
 ** @param fmt Your format text, the same as when using printf().
 ** @param ... Your additionnal arguments, the sames as when using printf().
 */
-void NL_log_output(unsigned int logLevel, char *file, unsigned int line,
-                   const char *fmt, ...);
+void NL_log_output(Logger logger, unsigned int logLevel, char *file,
+                   unsigned int line, const char *fmt, ...);
 
 /*
 ** Function to use when beginning an important step/action of your code
@@ -125,9 +135,10 @@ void NL_phase_done(unsigned int info);
 ** Function to enable or disable showing the line and file where the log has
 ** been printed. Default: enabled.
 **
+** @param logger pointer to your logger object
 ** @param enable Either NL_DISABLE or NL_ENABLE
 */
-void NL_set_file_and_line(int enable);
+void NL_set_file_and_line(Logger *logger, int enable);
 
 /*
 ** Example output when using NiceLog:
