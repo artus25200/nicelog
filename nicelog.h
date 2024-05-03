@@ -75,8 +75,6 @@ enum StageInfo {
 */
 typedef struct Logger Logger;
 
-void NL_init_logger(Logger *logger);
-
 /*
 ** Function to specify the name of your logger.
 ** NiceLog will then print your logs like this:

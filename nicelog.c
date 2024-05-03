@@ -46,7 +46,7 @@ void NL_set_log_level(Logger *logger, unsigned int log_level) {
 void NL_log_output(Logger logger, unsigned int log_level, char *file,
                    unsigned int line, const char *fmt, ...) {
   if (log_level < 1 && log_level > NL_ENUM_LOG_LEVEL_COUNT - 1) {
-    WARN("NiceLog: Unknown log level: %d", log_level);
+    WARN(nicelog_internal_logger, "NiceLog: Unknown log level: %d", log_level);
     return;
   }
   if (log_level < logger.log_level)
@@ -88,7 +88,7 @@ void NL_phase_begin(char *stage) {
 void NL_phase_done(unsigned int info) {
   const char *state;
   if (info > NL_ENUM_STAGE_INFO_COUNT) {
-    WARN("Unkown stage state");
+    WARN(nicelog_internal_logger, "Unkown stage state");
     state = "DONE";
   } else {
     state = stage_info[info];
@@ -108,20 +108,21 @@ void NL_set_file_and_line(Logger *logger, int enable) {
 }
 
 void NL_test(void) {
-  NL_set_log_level(NL_ALL);
+  Logger test_logger;
+  NL_set_log_level(&test_logger, NL_ALL);
   BEGIN("Initializing app");
-  INFO("Hello World! 1+2 = %d", 1 + 2);
-  WARN("Unknown Error !");
+  INFO(test_logger, "Hello World! 1+2 = %d", 1 + 2);
+  WARN(test_logger, "Unknown Error !");
   BEGIN("Trying something");
-  ERROR("Error, skipping");
+  ERROR(test_logger, "Error, skipping");
   DONE(NL_SKIPPED);
-  INFO("OK.");
+  INFO(test_logger, "OK.");
   DONE(NL_OK);
   BEGIN("initializing module 1");
-  INFO("initialized");
+  INFO(test_logger, "initialized");
   DONE(NL_OK);
   BEGIN("initializing module 2");
-  INFO("HI");
-  FATAL("Unknown error, exiting...");
+  INFO(test_logger, "HI");
+  FATAL(test_logger, "Unknown error, exiting...");
   DONE(NL_ABORTED);
 }
