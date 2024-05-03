@@ -6,18 +6,18 @@
 **
 ** @param fmt,... Use like you would use a printf().
 */
-#define TRACE(fmt, ...)                                                        \
-  NL_log_output(NL_TRACE, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
-#define DEBUG(fmt, ...)                                                        \
-  NL_log_output(NL_DEBUG, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
-#define INFO(fmt, ...)                                                         \
-  NL_log_output(NL_INFO, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
-#define WARN(fmt, ...)                                                         \
-  NL_log_output(NL_WARN, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
-#define ERROR(fmt, ...)                                                        \
-  NL_log_output(NL_ERROR, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
-#define FATAL(fmt, ...)                                                        \
-  NL_log_output(NL_FATAL, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#define TRACE(logger, fmt, ...)                                                \
+  NL_log_output(logger, NL_TRACE, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#define DEBUG(logger, fmt, ...)                                                \
+  NL_log_output(logger, NL_DEBUG, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#define INFO(logger, fmt, ...)                                                 \
+  NL_log_output(logger, NL_INFO, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#define WARN(logger, fmt, ...)                                                 \
+  NL_log_output(logger, NL_WARN, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#define ERROR(logger, fmt, ...)                                                \
+  NL_log_output(logger, NL_ERROR, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
+#define FATAL(logger, fmt, ...)                                                \
+  NL_log_output(logger, NL_FATAL, __FILE__, __LINE__, fmt, ##__VA_ARGS__)
 
 /*
 ** Macros to use when beginning or finishing an important step/action of your

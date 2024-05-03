@@ -9,6 +9,9 @@ struct Logger {
   unsigned int show_file_and_line;
 };
 
+static Logger nicelog_internal_logger = {
+    .name = "NICELOG", .log_level = NL_ALL, .show_file_and_line = 0};
+
 static unsigned int depth = 0;
 
 static const char *log_level_str[] = {"NULL",
