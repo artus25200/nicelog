@@ -4,6 +4,7 @@
 /*
 ** Macros to use when you want to output a log.
 **
+** @param logger The logger you want to use
 ** @param fmt,... Use like you would use a printf().
 */
 #define TRACE(logger, fmt, ...)                                                \
