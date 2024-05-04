@@ -43,13 +43,13 @@ void NL_set_log_level(Logger *logger, unsigned int log_level) {
   logger->log_level = log_level;
 }
 
-void NL_log_output(Logger logger, unsigned int log_level, char *file,
+void NL_log_output(Logger *logger, unsigned int log_level, char *file,
                    unsigned int line, const char *fmt, ...) {
   if (log_level < 1 && log_level > NL_ENUM_LOG_LEVEL_COUNT - 1) {
     WARN(nicelog_internal_logger, "NiceLog: Unknown log level: %d", log_level);
     return;
   }
-  if (log_level < logger.log_level)
+  if (log_level < logger->log_level)
     return; // ignore
   va_list args;
   va_start(args, fmt);
@@ -57,10 +57,10 @@ void NL_log_output(Logger logger, unsigned int log_level, char *file,
   for (int i = 0; i < depth; ++i)
     printf("│  ");
 
-  if (logger.name[0] != '\0')
-    printf("[%s]", logger.name);
+  if (logger->name[0] != '\0')
+    printf("[%s]", logger->name);
   printf("[%s] ", log_level_str[log_level]);
-  if (logger.show_file_and_line)
+  if (logger->show_file_and_line)
     printf("(%s:%d) ", file, line);
   if (log_level == NL_WARN)
     printf(NL_YELLOW);

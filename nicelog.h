@@ -110,7 +110,7 @@ void NL_set_log_level(Logger *logger, unsigned int logLevel);
 ** @param fmt Your format text, the same as when using printf().
 ** @param ... Your additionnal arguments, the sames as when using printf().
 */
-void NL_log_output(Logger logger, unsigned int logLevel, char *file,
+void NL_log_output(Logger *logger, unsigned int logLevel, char *file,
                    unsigned int line, const char *fmt, ...);
 
 /*
