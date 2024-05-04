@@ -77,6 +77,13 @@ enum StageInfo {
 typedef struct Logger Logger;
 
 /*
+** create a logger object
+**
+** @param name The name of the logger
+*/
+Logger *NL_create_logger(char *name);
+
+/*
 ** Function to specify the name of your logger.
 ** NiceLog will then print your logs like this:
 **    [LOGGER-NAME][INFO] message
@@ -85,7 +92,7 @@ typedef struct Logger Logger;
 ** @param name max 20 characters
 */
 void NL_set_logger_name(Logger *logger, char *name);
-
+void NL_reset_logger_name(Logger *logger);
 /*
 ** Function to specify the log level of your logger.
 ** Any output under the log level will be ignored
