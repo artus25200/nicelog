@@ -6,17 +6,17 @@
 
 
 
-TARGET := nicelog.a
-SRC := nicelog.c
-OBJ := nicelog.o
-
+TARGET := bin/nicelog.a
+SRC := src/nicelog.c
+OBJ := obj/nicelog.o
+INCLUDE := -Iinclude
 
 default: $(TARGET)
 $(TARGET): $(OBJ)
 	ar rcs $@ $^
 
 $(OBJ): $(SRC)
-	$(CC) -c  -o $@ $^
+	$(CC) $(INCLUDE) -c  -o $@ $^
 
 clean:
 	@rm -f $(OBJ) $(TARGET)
