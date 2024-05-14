@@ -114,6 +114,8 @@ void NL_set_file_and_line(Logger *logger, int enable) {
   logger->show_file_and_line = enable;
 }
 
+int NL_get_log_level(Logger *logger) { return logger->log_level; }
+
 void NL_test(void) {
   Logger test_logger;
   NL_set_log_level(&test_logger, NL_ALL);
