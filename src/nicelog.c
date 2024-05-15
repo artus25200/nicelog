@@ -56,16 +56,18 @@ void NL_log_output(Logger *logger, unsigned int log_level, char *file,
     WARN(&nicelog_internal_logger, "NiceLog: Unknown log level: %d", log_level);
     return;
   }
-  if (logger != NULL && log_level < logger->log_level)
-    return; // ignore
+  if (logger != NULL)
+    if (log_level < logger->log_level)
+      return; // ignore
   va_list args;
   va_start(args, fmt);
 
   for (int i = 0; i < depth; ++i)
     printf("│  ");
 
-  if (logger != NULL && logger->name[0] != '\0')
-    printf("[%s]", logger->name);
+  if (logger != NULL)
+    if (logger->name[0] != '\0')
+      printf("[%s]", logger->name);
   printf("[%s] ", log_level_str[log_level]);
   if (logger == NULL || logger->show_file_and_line)
     printf("(%s:%d) ", file, line);
