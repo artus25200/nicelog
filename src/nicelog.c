@@ -26,7 +26,7 @@ static const char *log_level_str[] = {"NULL",
 
 static const char *stage_info[] = {(NL_BOLDGREEN "DONE" NL_RESET),
                                    (NL_BOLDYELLOW "SKIPPED" NL_RESET),
-                                   (NL_BOLDRED "ABORTED" NL_RESET)};
+                                   (NL_BOLDRED "CANCELED" NL_RESET)};
 
 static unsigned int just_finished_phase = 0;
 
@@ -112,6 +112,12 @@ void NL_phase_done(unsigned int info) {
   just_finished_phase = 1;
 }
 
+void NL_phase_done_all(unsigned int info) {
+  while (depth > 0) {
+    NL_phase_done(info);
+  }
+}
+
 void NL_set_file_and_line(Logger *logger, int enable) {
   logger->show_file_and_line = enable;
 }
@@ -135,5 +141,5 @@ void NL_test(void) {
   BEGIN("initializing module 2");
   INFO(&test_logger, "HI");
   FATAL(&test_logger, "Unknown error, exiting...");
-  DONE(NL_ABORTED);
+  DONE(NL_CANCELED);
 }
