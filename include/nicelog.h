@@ -66,7 +66,7 @@ enum { NL_DISABLE = 0, NL_ENABLE };
 enum StageInfo {
   NL_OK,
   NL_SKIPPED,
-  NL_ABORTED,
+  NL_CANCELED,
 
   NL_ENUM_STAGE_INFO_COUNT
 };
